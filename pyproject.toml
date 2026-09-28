@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "douyin4u"
+version = "0.1.0"
+description = "Douyin private messages behind a wcferry-shaped client (Playwright RPA over CDP)"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    # Only the pip driver for connect_over_cdp(). `playwright install` is never
+    # needed: the client attaches to (or starts) the operator's own Edge, it
+    # never launches a managed browser.
+    "playwright==1.62.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+include = ["douyin4u*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
