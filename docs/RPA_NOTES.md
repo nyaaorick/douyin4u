@@ -287,7 +287,7 @@ technically achievable — worth weighing on its own terms, not folded into
 | Phase 0 reconnaissance scripts — removed 2026-09-21, recoverable from git history (`git show dff14aca:CowAgent/channel/douyin/_phase0_probes/README.md`); `probe_4`/`probe_6` click and send on a real account, and a re-run's output captures real fan content, so never commit it | — |
 | Live, read-only diagnostic tool (the maintained successor to the Phase 0 probes) | `tools/smoke_test.py` |
 | CowAgent: console address-book endpoints, shared with WCF by dispatch, not by code | `CowAgent/channel/web/contacts_api.py` |
-| CowAgent: console switch store, channel-parameterized (`get_contact_state("douyin")`) | `CowAgent/channel/wcf/contact_state.py` |
+| CowAgent: console switch store, channel-parameterized (`get_contact_state("douyin")`) | `CowAgent/channel/contact_state.py` |
 | CowAgent: console frontend (channel switch tab, address-book rendering) | `CowAgent/channel/web/static/js/contacts.js` |
 | Tests (no real browser required — a `FakePage` double covers all logic in this document) | `tests/test_douyin_channel.py`, `tests/test_douyin_humanize.py`, `tests/test_douyin_outbound.py`, `tests/test_douyin_scanner.py` |
 
