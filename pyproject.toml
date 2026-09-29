@@ -7,6 +7,7 @@ name = "douyin4u"
 version = "0.1.0"
 description = "Douyin private messages behind a wcferry-shaped client (Playwright RPA over CDP)"
 readme = "README.md"
+license = { text = "MIT" }
 requires-python = ">=3.9"
 dependencies = [
     # Only the pip driver for connect_over_cdp(). `playwright install` is never
