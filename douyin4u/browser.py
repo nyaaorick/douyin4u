@@ -17,12 +17,13 @@ in. A browser started here that lands on the login screen is reported as
 
 Two things make this narrower than "open a browser":
 
-1. **The profile is fixed** (``profile_dir``, default
-   ``~/cow/douyin-probe-profile``). The whole point is to reuse the session
-   the operator already logged in once; a fresh profile would come up logged
-   out every time and be useless. It is deliberately not the operator's
-   everyday Edge profile -- automating a browser that holds their personal
-   session is a different and much worse proposition.
+1. **The profile is fixed** (``profile_dir``, default this repo's own
+   ``browser-profile/`` -- see ``_default_profile_dir`` below). The whole
+   point is to reuse the session the operator already logged in once; a
+   fresh profile would come up logged out every time and be useless. It is
+   deliberately not the operator's everyday Edge profile -- automating a
+   browser that holds their personal session is a different and much worse
+   proposition.
 2. **A profile that is already open cannot be given a debug port.** Launching
    Edge a second time on a profile that some window already holds hands the
    command to that window and silently drops ``--remote-debugging-port``.
@@ -30,8 +31,15 @@ Two things make this narrower than "open a browser":
    is reported by the wait below timing out, and the message says what to
    close.
 
-Every setting arrives as an argument. This package reads no configuration of
-its own; the host application decides where its settings live.
+Every setting arrives as an argument -- this package reads no host
+configuration of its own. Left empty, though, it still needs a real profile
+to launch into, so ``profile_dir``'s default is computed here rather than
+left for a host to supply: this repo's own ``browser-profile/`` folder
+(``_default_profile_dir``), not a path under the host application's data
+directory. A login session is credentials for a real account, and this
+package is the only thing that opens the browser holding it; a host that
+wants its own agent workspace to travel with the login can still say so
+explicitly through ``profile_dir``.
 """
 
 import logging
@@ -64,7 +72,7 @@ _PORT_POLL_SECONDS = 0.5
 # for a while before giving up.
 _PROBE_TIMEOUT_SECONDS = 1.0
 
-_DEFAULT_PROFILE_SUBPATH = ("cow", "douyin-probe-profile")
+_DEFAULT_PROFILE_DIR_NAME = "browser-profile"
 
 # Where Edge installs itself, most common first. `shutil.which` covers a PATH
 # install and the non-Windows names; nothing here is a guess the caller acts
@@ -105,13 +113,28 @@ def cdp_port_open(cdp_url: str) -> bool:
         return False
 
 
+def _default_profile_dir() -> str:
+    """This repo's own ``browser-profile/``, beside the ``douyin4u`` package.
+
+    Not a path under the host's data directory (a prior default was
+    ``~/cow/douyin-probe-profile``, naming a CowAgent-specific folder this
+    otherwise host-agnostic package has no business knowing about -- see the
+    module docstring). Resolved from this file's own location so it is the
+    same folder however the repo is checked out, and never silently changes
+    under a login session already sitting in it.
+    """
+    package_dir = os.path.dirname(os.path.abspath(__file__))
+    repo_root = os.path.dirname(package_dir)
+    return os.path.join(repo_root, _DEFAULT_PROFILE_DIR_NAME)
+
+
 def browser_profile_dir(configured: str = "") -> str:
     """The browser profile to reuse. See this module's docstring on why it is
     a fixed, dedicated one rather than the operator's everyday profile."""
     configured = (configured or "").strip()
     if configured:
         return os.path.expanduser(configured)
-    return os.path.join(os.path.expanduser("~"), *_DEFAULT_PROFILE_SUBPATH)
+    return _default_profile_dir()
 
 
 def resolve_browser_path(configured: str = "") -> str:

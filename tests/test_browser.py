@@ -44,7 +44,10 @@ def edge(tmp_path):
 
 # ------------------------------------------------------------------- profile
 def test_the_profile_defaults_to_the_dedicated_one():
-    assert browser.browser_profile_dir("").endswith(os.path.join("cow", "douyin-probe-profile"))
+    """This repo's own folder, not a path under some host's data directory --
+    see browser.py's module docstring and ``_default_profile_dir``."""
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(browser.__file__)))
+    assert browser.browser_profile_dir("") == os.path.join(repo_root, "browser-profile")
 
 
 def test_a_configured_profile_wins_and_expands_a_home_shortcut():
