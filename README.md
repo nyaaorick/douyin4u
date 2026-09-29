@@ -1,6 +1,6 @@
 # douyin4u
 
-Douyin (抖音) private messages behind a client shaped like WeChatFerry's
+Douyin private messages behind a client shaped like WeChatFerry's
 `wcferry.Wcf` — so a host that already speaks WeChatFerry reaches Douyin with
 the same code.
 

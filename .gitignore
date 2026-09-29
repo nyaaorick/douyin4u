@@ -6,3 +6,8 @@ __pycache__/
 .venv/
 build/
 dist/
+
+# The default Edge profile browser_profile_dir() launches into
+# (douyin4u/browser.py): a real, logged-in Douyin session. Never committed --
+# this is account credentials, not project data.
+/browser-profile/
