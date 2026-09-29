@@ -4,7 +4,7 @@ Douyin private messages behind a client shaped like WeChatFerry's
 `wcferry.Wcf` — so a host that already speaks WeChatFerry reaches Douyin with
 the same code.
 
-> **Not for use in mainland China.** 
+> **Not for use in mainland China.** It is published for research and education; you are solely responsible for how you use it, and the authors accept no liability.
 
 There is no vendor SDK for this: Douyin's private-message API needs an
 enterprise / blue-V account and a review. douyin4u instead drives the same
